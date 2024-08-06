@@ -1,0 +1,34 @@
+###
+GET https://9440-14-225-192-183.ngrok-free.app/webhook?hub.mode=subscribe&hub.verify_token=giabao2709&hub.challenge=BaoTram
+
+###
+POST https://9440-14-225-192-183.ngrok-free.app/webhook
+Content-Type: application/json
+
+{
+  "object": "page",
+  "entry": [
+    {
+      "id": "123456789",
+      "time": 1458692752478,
+      "messaging": [
+        {
+          "sender": {
+            "id": "123456789"
+          },
+          "recipient": {
+            "id": "987654321"
+          },
+          "timestamp": 1458692752478,
+          "message": {
+            "mid": "mid.1457764197618:41d102a3e1ae206a38",
+            "text": "hello, world!",
+            "quick_reply": {
+              "payload": "DEVELOPER_DEFINED_PAYLOAD"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

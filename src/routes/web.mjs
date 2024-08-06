@@ -99,8 +99,11 @@ let initWEBRoutes = (app) => {
         let webhook_event = entry.messaging[0];
         console.log(webhook_event);
 
-        let sender_psid = webhook_event.sender.id;
-        console.log("Sender PSID: " + sender_psid);
+        if(webhook_event.message) {
+          handleMessage(webhook_event.sender.id, webhook_event.message);
+        } else if (webhook_event.postback) {
+          handlePostback(webhook_event.sender.id, webhook_event.postback);
+        }
       });
       return res.status(200).send("EVENT_RECEIVED");
     } else {
@@ -115,6 +118,7 @@ let initWEBRoutes = (app) => {
     if (mode && token) {
       if (mode === "subscribe" && token === VERIFY_TOKEN) {
         console.log("WEBHOOK_VERIFIED");
+
         return res.status(200).send(challenge);
       } else {
         return res.sendStatus(403);
