@@ -2,10 +2,90 @@ import express from "express";
 import { configDotenv } from "dotenv";
 configDotenv();
 
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+
 let router = express.Router();
 
-// Write routes for Webhook Messenger
+// Handles messages events
+function handleMessage(sender_psid, received_message) {
+  let response;
+  if (received_message.text) {
+    response = {
+      text: `You sent the message: "${received_message.text}". Now send me an image!`,
+    };
+  } else if (received_message.attachments) {
+    let attachment_url = received_message.attachments[0].payload.url;
+    response = {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [
+            {
+              title: "Is this the right picture?",
+              subtitle: "Tap a button to answer.",
+              image_url: attachment_url,
+              buttons: [
+                {
+                  type: "postback",
+                  title: "Yes!",
+                  payload: "yes",
+                },
+                {
+                  type: "postback",
+                  title: "No!",
+                  payload: "no",
+                },
+              ],
+            },
+          ],
+        },
+      },
+    };
+  }
+  callSendAPI(sender_psid, response);
+}
 
+// Handles messaging_postbacks events
+function handlePostback(sender_psid, received_postback) {
+  let response;
+  let payload = received_postback.payload;
+  if (payload === "yes") {
+    response = { text: "Thanks!" };
+  } else if (payload === "no") {
+    response = { text: "Oops, try sending another image." };
+  }
+  callSendAPI(sender_psid, response);
+}
+
+// Sends response messages via the Send API
+function callSendAPI(sender_psid, response) {
+  let request_body = {
+    recipient: {
+      id: sender_psid,
+    },
+    message: response,
+  };
+  fetch("https://graph.facebook.com/v11.0/me/messages?access_token=" + PAGE_ACCESS_TOKEN, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(request_body),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log("Message sent successfully!", res);
+    })
+    .catch((error) => {
+      console.error("Unable to send message:", error);
+    });
+}
+
+
+
+// Write routes for Webhook Messenger
 let initWEBRoutes = (app) => {
   router.get("/", (req, res) => {
     return res.send(`<h1>Hello World</h1>`);
@@ -18,6 +98,9 @@ let initWEBRoutes = (app) => {
         // entry.messaging is an array, but only ever contains one message => get index 0
         let webhook_event = entry.messaging[0];
         console.log(webhook_event);
+
+        let sender_psid = webhook_event.sender.id;
+        console.log("Sender PSID: " + sender_psid);
       });
       return res.status(200).send("EVENT_RECEIVED");
     } else {
@@ -26,8 +109,6 @@ let initWEBRoutes = (app) => {
   });
 
   router.get("/webhook", (req, res) => {
-    let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-
     let mode = req.query["hub.mode"];
     let token = req.query["hub.verify_token"];
     let challenge = req.query["hub.challenge"];
@@ -42,6 +123,18 @@ let initWEBRoutes = (app) => {
       return res.sendStatus(404);
     }
   });
+
+
+
+
+
+
+
+
+
+
+
+
 
   return app.use("/", router);
 };
