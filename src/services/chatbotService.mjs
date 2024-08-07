@@ -16,27 +16,26 @@ export default class ChatbotService {
     await this.sendMarkSeen(sender_psid);
     await this.sendTypingOn(sender_psid);
 
-    await setTimeout(() => {
+    setTimeout(() => {
+      fetch(
+        "https://graph.facebook.com/v11.0/me/messages?access_token=" +
+          PAGE_ACCESS_TOKEN,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(request_body),
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          console.log("Message sent successfully!", res);
+        })
+        .catch((error) => {
+          console.error("Unable to send message:", error);
+        });
     }, 5000);
-
-    fetch(
-      "https://graph.facebook.com/v11.0/me/messages?access_token=" +
-        PAGE_ACCESS_TOKEN,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(request_body),
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        console.log("Message sent successfully!", res);
-      })
-      .catch((error) => {
-        console.error("Unable to send message:", error);
-      });
   }
 
   static async sendTypingOn(sender_psid) {
