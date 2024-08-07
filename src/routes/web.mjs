@@ -72,7 +72,7 @@ async function handlePostback(sender_psid, received_postback) {
       break;
     
     case "MAIN_MENU":
-      response = ChatbotService.handleMenu();
+      response = ChatbotService.handleMenu(sender_psid);
       break;
     
     case "BREAKFAST":
