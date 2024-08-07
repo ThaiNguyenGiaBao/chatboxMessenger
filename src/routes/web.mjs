@@ -155,11 +155,11 @@ let initWEBRoutes = (app) => {
     }
   });
 
-  router.post("/setup-profile", (req, res) => {
-    console.log("Setup profile...");
-    setupProfile();
-    return res.send("Setup profile successfully!");
-  });
+  // router.post("/setup-profile", (req, res) => {
+  //   console.log("Setup profile...");
+  //   setupProfile();
+  //   return res.send("Setup profile successfully!");
+  // });
 
   return app.use("/", router);
 };
