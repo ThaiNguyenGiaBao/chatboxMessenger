@@ -14,7 +14,7 @@ export default class ChatbotService {
     };
 
     await this.sendMarkSeen(sender_psid);
-    await this.sendTypingOn(sender_psid);
+    this.sendTypingOn(sender_psid);
 
     setTimeout(() => {
       fetch(
