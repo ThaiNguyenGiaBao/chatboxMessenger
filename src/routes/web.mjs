@@ -86,7 +86,7 @@ async function handlePostback(sender_psid, received_postback) {
       };
       break;
 
-    case "ADVICE":
+    case "ADVISE":
       response = ChatbotService.handleAdvice(sender_psid);
       break;
 
