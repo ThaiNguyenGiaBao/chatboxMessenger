@@ -17,7 +17,7 @@ export default class ChatbotService {
     await this.sendTypingOn(sender_psid);
 
     await setTimeout(() => {
-    }, 1000);
+    }, 5000);
 
     fetch(
       "https://graph.facebook.com/v11.0/me/messages?access_token=" +
