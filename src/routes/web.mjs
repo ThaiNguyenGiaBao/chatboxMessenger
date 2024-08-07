@@ -67,13 +67,17 @@ function callSendAPI(sender_psid, response) {
     },
     message: response,
   };
-  fetch("https://graph.facebook.com/v11.0/me/messages?access_token=" + PAGE_ACCESS_TOKEN, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(request_body),
-  })
+  fetch(
+    "https://graph.facebook.com/v11.0/me/messages?access_token=" +
+      PAGE_ACCESS_TOKEN,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request_body),
+    }
+  )
     .then((res) => res.json())
     .then((res) => {
       console.log("Message sent successfully!", res);
@@ -83,12 +87,35 @@ function callSendAPI(sender_psid, response) {
     });
 }
 
-
+function setupProfile() {
+  let request_body = {
+    get_started: { payload: "GET_STARTED" },
+    whitelisted_domains: ["https://drum-expert-miserably.ngrok-free.app/"],
+  };
+  fetch(
+    "https://graph.facebook.com/v11.0/me/messenger_profile?access_token=" +
+      PAGE_ACCESS_TOKEN,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request_body),
+    }
+  )
+    .then((res) => res.json())
+    .then((res) => {
+      console.log("Setup profile successfully!", res);
+    })
+    .catch((error) => {
+      console.error("Unable to setup profile:", error);
+    });
+}
 
 // Write routes for Webhook Messenger
 let initWEBRoutes = (app) => {
   router.get("/", (req, res) => {
-    return res.send(`<h1>Hello World</h1>`);
+    return res.render("homePage.ejs");
   });
 
   router.post("/webhook", (req, res) => {
@@ -99,7 +126,7 @@ let initWEBRoutes = (app) => {
         let webhook_event = entry.messaging[0];
         console.log(webhook_event);
 
-        if(webhook_event.message) {
+        if (webhook_event.message) {
           handleMessage(webhook_event.sender.id, webhook_event.message);
         } else if (webhook_event.postback) {
           handlePostback(webhook_event.sender.id, webhook_event.postback);
@@ -128,17 +155,11 @@ let initWEBRoutes = (app) => {
     }
   });
 
-
-
-
-
-
-
-
-
-
-
-
+  router.post("/setup-profile", (req, res) => {
+    console.log("Setup profile...");
+    setupProfile();
+    return res.send("Setup profile successfully!");
+  });
 
   return app.use("/", router);
 };
