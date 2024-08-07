@@ -16,6 +16,9 @@ export default class ChatbotService {
     await this.sendMarkSeen(sender_psid);
     await this.sendTypingOn(sender_psid);
 
+    setTimeout(() => {
+    }, 1000);
+
     fetch(
       "https://graph.facebook.com/v11.0/me/messages?access_token=" +
         PAGE_ACCESS_TOKEN,
@@ -130,7 +133,7 @@ export default class ChatbotService {
         [
           Response.genPostbackButton("Start a new order", "NEW_ORDER"),
           Response.genPostbackButton("Main menu", "MAIN_MENU"),
-          Response.genPostbackButton("How to use the chatbot?", "USE_CHATBOT"),
+          Response.genPostbackButton("Use the chatbot", "USE_CHATBOT"),
         ]
       )
     );
