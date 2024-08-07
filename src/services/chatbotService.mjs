@@ -31,16 +31,21 @@ function callSendAPI(sender_psid, response) {
 }
 
 async function getUserName(sender_psid) {
-    let response = await fetch(
-        `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`
-    );
-    let responseJson = await response.json();
-    let userName = `${responseJson.first_name} ${responseJson.last_name}`;
-    return userName;
+  let response = await fetch(
+    `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`
+  )
+    .then((res) => res.json())
+    .catch((error) => {
+      console.error("Unable to get user name:", error);
+    });
+
+  let responseJson = await response.json();
+  let userName = `${responseJson.first_name} ${responseJson.last_name}`;
+  return userName;
 }
 
-async function handleGetStarted() {
-    const username = await getUserName(sender_psid);
+async function handleGetStarted(sender_psid) {
+  const username = await getUserName(sender_psid);
   let response = {
     text: `Hello ${username}! I'm a chatbot. How can I help you?`,
   };

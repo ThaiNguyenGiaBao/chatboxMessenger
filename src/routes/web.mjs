@@ -61,7 +61,7 @@ function handlePostback(sender_psid, received_postback) {
       response = { text: "Oops, try sending another image." };
       break;
     case "GET_STARTED":
-      response = handleGetStarted();
+      response = handleGetStarted(sender_psid);
       break;
     default:
       response = { text: "Oops! I don't understand that." };
