@@ -39,8 +39,7 @@ async function getUserName(sender_psid) {
       console.error("Unable to get user name:", error);
     });
 
-  let responseJson = await response.json();
-  let userName = `${responseJson.first_name} ${responseJson.last_name}`;
+  let userName = `${response.first_name} ${response.last_name}`;
   return userName;
 }
 
