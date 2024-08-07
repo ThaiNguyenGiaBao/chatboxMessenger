@@ -16,7 +16,7 @@ export default class ChatbotService {
     await this.sendMarkSeen(sender_psid);
     this.sendTypingOn(sender_psid);
 
-    await setTimeout(() => {
+    setTimeout(() => {
       fetch(
         "https://graph.facebook.com/v11.0/me/messages?access_token=" +
           PAGE_ACCESS_TOKEN,
@@ -111,26 +111,120 @@ export default class ChatbotService {
 
     // Send the response message
     const response1 = {
-      text: `Hello ${username}! I'm a chatbot. How can I help you?`,
+      text: `Phòng khám chuyên khoa nhi Bé Bé Yêu xin chào ${username}!`,
     };
 
     const response2 = Response.genGenericTemplate(
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCB-OyweWXxSDnlPOxkeL5EZd4ezG8lk3oBgB9tQzBmYrZ4CBmLBvOYAPnNUo1FiWjglc&usqp=CAU",
-      "Welcome to our restaurant",
-      "Please select an option",
-      []
+      "https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/319815262_711019103936431_1276742203420179473_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=MGpD6Q3MIc0Q7kNvgEHz2Qm&_nc_ht=scontent-hkg4-2.xx&oh=00_AYAVAAUHcJMAtO4-n_QMyJir9LnlZ9H7lV_7m3bU_aOIAw&oe=66B961CF",
+      "Hãy cho bác sĩ biết bạn đang cần gì?",
+      "Nhấn các nút bên dưới để chọn",
+      [
+        Response.genPostbackButton("Cần tư vấn", "ADVISE"),
+        Response.genPostbackButton("Danh sách dịch vụ khám", "SERVICES"),
+        Response.genPostbackButton("Đặt lịch hẹn", "APPOINTMENT"),
+      ]
     );
+
+    // const elements = [];
+    // elements.push(
+    //   Response.genELementsTemplate(
+    //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCB-OyweWXxSDnlPOxkeL5EZd4ezG8lk3oBgB9tQzBmYrZ4CBmLBvOYAPnNUo1FiWjglc&usqp=CAU",
+    //     "Welcome to our restaurant",
+    //     "Please select an option",
+    //     [
+    //       Response.genPostbackButton("Start a new order", "NEW_ORDER"),
+    //       Response.genPostbackButton("Main menu", "MAIN_MENU"),
+    //       Response.genPostbackButton("Use the chatbot", "USE_CHATBOT"),
+    //     ]
+    //   )
+    // );
+    // elements.push(
+    //   Response.genELementsTemplate(
+    //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV3V_QmFRmB8xPPSOmShms0tMMMAH1G9i7pg&s",
+    //     "Our restaurant opens at 8:00 AM and closes at 10:00 PM",
+    //     "Please select an option",
+    //     [Response.genPostbackButton("Order", "NEW_ORDER")]
+    //   )
+    // );
+    // // menu
+    // elements.push(
+    //   Response.genELementsTemplate(
+    //     "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
+    //     "Menu",
+    //     "Please select an option",
+    //     [
+    //       Response.genPostbackButton("Breakfast", "BREAKFAST"),
+    //       Response.genPostbackButton("Lunch", "LUNCH"),
+    //       Response.genPostbackButton("Dinner", "DINNER"),
+    //     ]
+    //   )
+    // );
+    //response2.attachment.payload.elements = elements;
+
+    // Quick replies
+    // const response3 = Response.genQuickReply("What do you want to do next?", [
+    //   {
+    //     title: "Start a new order",
+    //     payload: "NEW_ORDER",
+    //   },
+    //   {
+    //     title: "Main menu",
+    //     payload: "MAIN_MENU",
+    //   },
+    //   {
+    //     title: "Use the chatbot",
+    //     payload: "USE_CHATBOT",
+    //   },
+    // ]);
+
+    await this.callSendAPI(sender_psid, response1);
+    await this.callSendAPI(sender_psid, response2);
+    //await this.callSendAPI(sender_psid, response3);
+  }
+
+  static async handleAdvice(sender_psid) {
+    // const response = Response.genGenericTemplate(
+    //   "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
+    //   "Menu",
+    //   "Please select an option",
+    //   [
+    //     Response.genPostbackButton("Breakfast", "BREAKFAST"),
+    //     Response.genPostbackButton("Lunch", "LUNCH"),
+    //     Response.genPostbackButton("Dinner", "DINNER"),
+    //   ]
+    // );
+
+    // Quick replies for advice service about children health
+    const response = Response.genQuickReply("Bạn cần tư vấn về vấn đề gì?", [
+      {
+        title: "Bệnh lý",
+        payload: "DISEASE",
+      },
+      {
+        title: "Tai nạn và chấn thương",
+        payload: "ACCIDENT",
+      },
+      {
+        title: "Các vấn đề khác",
+        payload: "OTHERS",
+      },
+    ]);
+
+    await this.callSendAPI(sender_psid, response);
+  }
+
+  static async handleServices(sender_psid) {
+    const response = Response.genGenericTemplate("", "", "", []);
 
     const elements = [];
     elements.push(
       Response.genELementsTemplate(
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCB-OyweWXxSDnlPOxkeL5EZd4ezG8lk3oBgB9tQzBmYrZ4CBmLBvOYAPnNUo1FiWjglc&usqp=CAU",
-        "Welcome to our restaurant",
-        "Please select an option",
+        "https://benhvienbacha.vn/wp-content/uploads/2023/02/long-bien-kham-suc-khoe-tong-quat-cho-tre-em-o-dau-tot-2.jpg",
+        "Khám sức khỏe tổng quát",
+        "Bác sĩ sẽ trao đổi, đồng thời giải đáp để phụ huynh hiểu về tình trạng của bé",
         [
-          Response.genPostbackButton("Start a new order", "NEW_ORDER"),
-          Response.genPostbackButton("Main menu", "MAIN_MENU"),
-          Response.genPostbackButton("Use the chatbot", "USE_CHATBOT"),
+          Response.genPostbackButton("Đặt lịch ngay", "BOOK_HEALTH_CHECK"),
+          Response.genPostbackButton("Thông tin chi tiết", "DETAIL_HEALTH_CHECK"),
         ]
       )
     );
@@ -155,55 +249,7 @@ export default class ChatbotService {
         ]
       )
     );
-
-    response2.attachment.payload.elements = elements;
-
-    // Quick replies
-    const response3 = Response.genQuickReply("What do you want to do next?", [
-      {
-        title: "Start a new order",
-        payload: "NEW_ORDER",
-      },
-      {
-        title: "Main menu",
-        payload: "MAIN_MENU",
-      },
-      {
-        title: "Use the chatbot",
-        payload: "USE_CHATBOT",
-      },
-    ]);
-
-    await this.callSendAPI(sender_psid, response1);
-    await this.callSendAPI(sender_psid, response2);
-    await this.callSendAPI(sender_psid, response3);
-  }
-
-  static async handleMenu(sender_psid) {
-    const response = Response.genGenericTemplate(
-      "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
-      "Menu",
-      "Please select an option",
-      [
-        Response.genPostbackButton("Breakfast", "BREAKFAST"),
-        Response.genPostbackButton("Lunch", "LUNCH"),
-        Response.genPostbackButton("Dinner", "DINNER"),
-      ]
-    );
-    await this.callSendAPI(sender_psid, response);
-  }
-
-  static async handleBreakfast(sender_psid) {
-    const response = Response.genGenericTemplate(
-      "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
-      "Breakfast",
-      "In the morning, we serve breakfast with bread, noodles, and rice.",
-      [
-        Response.genPostbackButton("Bread", "BREAD"),
-        Response.genPostbackButton("Noodles", "NOODLES"),
-        Response.genPostbackButton("Rice", "RICE"),
-      ]
-    );
+    response.attachment.payload.elements = elements;
     await this.callSendAPI(sender_psid, response);
   }
 

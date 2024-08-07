@@ -30,6 +30,7 @@ async function handleMessage(sender_psid, received_message) {
         break;
       case "MAIN_MENU":
         ChatbotService.handleMenu(sender_psid);
+        break;
       default:
         response = { text: "Oops! I don't understand that." };
         ChatbotService.callSendAPI(sender_psid, response);
@@ -74,31 +75,23 @@ async function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   switch (payload) {
-    case "yes":
-      response = { text: "Thanks!" };
-      ChatbotService.callSendAPI(sender_psid, response);
-      break;
-    case "no":
-      response = { text: "Oops, try sending another image." };
-      ChatbotService.callSendAPI(sender_psid, response);
-      break;
 
     case "RESTART_CONVERSATION":
     case "GET_STARTED":
       await ChatbotService.handleGetStarted(sender_psid);
       break;
-    case "TALK_TO_AGENT":
+    case "CONTACT_AGENT":
       response = {
-        text: "Please wait for a moment. I will connect you to an agent.",
+        text: "Đây là số điện thoại của bác sĩ: 0123456789",
       };
       break;
 
-    case "MAIN_MENU":
-      response = ChatbotService.handleMenu(sender_psid);
+    case "ADVICE":
+      response = ChatbotService.handleAdvice(sender_psid);
       break;
 
-    case "BREAKFAST":
-      await ChatbotService.handleBreakfast(sender_psid);
+    case "SERVICES":
+      await ChatbotService.handleServices(sender_psid);
       break;
     case "LUNCH":
       await ChatbotService.handleLunch(sender_psid);
