@@ -103,6 +103,20 @@ export default class ChatbotService {
     await this.callSendAPI(sender_psid, response2);
   }
 
+  static async handleMenu(sender_psid) {
+    const response = Response.genGenericTemplate(
+      "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
+      "Menu",
+      "Please select an option",
+      [
+        Response.genPostbackButton("Breakfast", "BREAKFAST"),
+        Response.genPostbackButton("Lunch", "LUNCH"),
+        Response.genPostbackButton("Dinner", "DINNER"),
+      ]
+    );
+    await this.callSendAPI(sender_psid, response);
+  }
+
   static async handleBreakfast(sender_psid) {
     const response = Response.genGenericTemplate(
       "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",

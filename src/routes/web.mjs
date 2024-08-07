@@ -67,7 +67,14 @@ async function handlePostback(sender_psid, received_postback) {
     case "GET_STARTED":
       await ChatbotService.handleGetStarted(sender_psid);
       break;
-
+    case "TALK_TO_AGENT":
+      response = { text: "Please wait for a moment. I will connect you to an agent." };
+      break;
+    
+    case "MENU":
+      response = ChatbotService.handleMenu();
+      break;
+    
     case "BREAKFAST":
       await ChatbotService.handleBreakfast(sender_psid);
       break;
