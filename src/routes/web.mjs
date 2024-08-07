@@ -1,7 +1,7 @@
 import express from "express";
 import { configDotenv } from "dotenv";
 configDotenv();
-import { callSendAPI, handleGetStarted } from "../services/chatbotService.mjs";
+import ChatbotService from "../services/chatbotService.mjs";
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
@@ -45,7 +45,7 @@ function handleMessage(sender_psid, received_message) {
       },
     };
   }
-  callSendAPI(sender_psid, response);
+  ChatbotService.callSendAPI(sender_psid, response);
 }
 
 // Handles messaging_postbacks events
@@ -56,18 +56,22 @@ async function handlePostback(sender_psid, received_postback) {
   switch (payload) {
     case "yes":
       response = { text: "Thanks!" };
+      ChatbotService.callSendAPI(sender_psid, response);
       break;
     case "no":
       response = { text: "Oops, try sending another image." };
+      ChatbotService.callSendAPI(sender_psid, response);
       break;
+    
+    case "RESTART_CONVERSATION":
     case "GET_STARTED":
-      response = await handleGetStarted(sender_psid);
+      await ChatbotService.handleGetStarted(sender_psid);
+
       break;
     default:
       response = { text: "Oops! I don't understand that." };
+      ChatbotService.callSendAPI(sender_psid, response);
   }
-
-  callSendAPI(sender_psid, response);
 }
 
 function setupProfile() {
@@ -92,6 +96,51 @@ function setupProfile() {
     })
     .catch((error) => {
       console.error("Unable to setup profile:", error);
+    });
+}
+
+function setupPersistentMenu() {
+  let request_body = {
+    persistent_menu: [
+      {
+        locale: "default",
+        composer_input_disabled: false,
+        call_to_actions: [
+          {
+            type: "postback",
+            title: "Talk to an agent",
+            payload: "TALK_TO_AGENT",
+          },
+          {
+            type: "postback",
+            title: "Restart conversation",
+            payload: "RESTART_CONVERSATION",
+          },
+          {
+            type: "web_url",
+            title: "Visit website",
+            url: "https://www.facebook.com",
+          },
+        ],
+      },
+    ],
+  };
+
+  fetch(
+    "https://graph.facebook.com/v11.0/me/messenger_profile?access_token=" +
+      PAGE_ACCESS_TOKEN,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(request_body),
+    }
+  )
+    .then((res) => res.json())
+    .then((res) => {
+      console.log("Setup persistent menu successfully!", res);
+    })
+    .catch((error) => {
+      console.error("Unable to setup persistent menu:", error);
     });
 }
 
@@ -139,9 +188,13 @@ let initWEBRoutes = (app) => {
   });
 
   router.post("/setup-profile", (req, res) => {
-    console.log("Setup profile...");
     setupProfile();
     return res.send("Setup profile successfully!");
+  });
+
+  router.post("/setup-persistent-menu", (req, res) => {
+    setupPersistentMenu();
+    return res.send("Setup persistent menu successfully!");
   });
 
   return app.use("/", router);
