@@ -93,8 +93,8 @@ async function handlePostback(sender_psid, received_postback) {
     case "SERVICES":
       await ChatbotService.handleServices(sender_psid);
       break;
-    case "LUNCH":
-      await ChatbotService.handleLunch(sender_psid);
+    case "APPOINTMENT":
+      await ChatbotService.handleAppointment(sender_psid);
       break;
     case "DINNER":
       await ChatbotService.handleDinner(sender_psid);

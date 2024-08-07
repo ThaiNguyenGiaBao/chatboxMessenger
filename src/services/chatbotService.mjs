@@ -124,76 +124,11 @@ export default class ChatbotService {
         Response.genPostbackButton("Đặt lịch hẹn", "APPOINTMENT"),
       ]
     );
-
-    // const elements = [];
-    // elements.push(
-    //   Response.genELementsTemplate(
-    //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCB-OyweWXxSDnlPOxkeL5EZd4ezG8lk3oBgB9tQzBmYrZ4CBmLBvOYAPnNUo1FiWjglc&usqp=CAU",
-    //     "Welcome to our restaurant",
-    //     "Please select an option",
-    //     [
-    //       Response.genPostbackButton("Start a new order", "NEW_ORDER"),
-    //       Response.genPostbackButton("Main menu", "MAIN_MENU"),
-    //       Response.genPostbackButton("Use the chatbot", "USE_CHATBOT"),
-    //     ]
-    //   )
-    // );
-    // elements.push(
-    //   Response.genELementsTemplate(
-    //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV3V_QmFRmB8xPPSOmShms0tMMMAH1G9i7pg&s",
-    //     "Our restaurant opens at 8:00 AM and closes at 10:00 PM",
-    //     "Please select an option",
-    //     [Response.genPostbackButton("Order", "NEW_ORDER")]
-    //   )
-    // );
-    // // menu
-    // elements.push(
-    //   Response.genELementsTemplate(
-    //     "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
-    //     "Menu",
-    //     "Please select an option",
-    //     [
-    //       Response.genPostbackButton("Breakfast", "BREAKFAST"),
-    //       Response.genPostbackButton("Lunch", "LUNCH"),
-    //       Response.genPostbackButton("Dinner", "DINNER"),
-    //     ]
-    //   )
-    // );
-    //response2.attachment.payload.elements = elements;
-
-    // Quick replies
-    // const response3 = Response.genQuickReply("What do you want to do next?", [
-    //   {
-    //     title: "Start a new order",
-    //     payload: "NEW_ORDER",
-    //   },
-    //   {
-    //     title: "Main menu",
-    //     payload: "MAIN_MENU",
-    //   },
-    //   {
-    //     title: "Use the chatbot",
-    //     payload: "USE_CHATBOT",
-    //   },
-    // ]);
-
     await this.callSendAPI(sender_psid, response1);
     await this.callSendAPI(sender_psid, response2);
-    //await this.callSendAPI(sender_psid, response3);
   }
 
   static async handleAdvice(sender_psid) {
-    // const response = Response.genGenericTemplate(
-    //   "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
-    //   "Menu",
-    //   "Please select an option",
-    //   [
-    //     Response.genPostbackButton("Breakfast", "BREAKFAST"),
-    //     Response.genPostbackButton("Lunch", "LUNCH"),
-    //     Response.genPostbackButton("Dinner", "DINNER"),
-    //   ]
-    // );
-
     // Quick replies for advice service about children health
     const response = Response.genQuickReply("Bạn cần tư vấn về vấn đề gì?", [
       {
@@ -219,33 +154,43 @@ export default class ChatbotService {
     const elements = [];
     elements.push(
       Response.genELementsTemplate(
-        "https://benhvienbacha.vn/wp-content/uploads/2023/02/long-bien-kham-suc-khoe-tong-quat-cho-tre-em-o-dau-tot-2.jpg",
+        "https://login.medlatec.vn//ckfinder/userfiles/images/kham-suc-khoe-cho-tre-em-o-dau-tot-1.jpg",
         "Khám sức khỏe tổng quát",
         "Bác sĩ sẽ trao đổi, đồng thời giải đáp để phụ huynh hiểu về tình trạng của bé",
         [
           Response.genPostbackButton("Đặt lịch ngay", "BOOK_HEALTH_CHECK"),
-          Response.genPostbackButton("Thông tin chi tiết", "DETAIL_HEALTH_CHECK"),
+          Response.genPostbackButton(
+            "Thông tin chi tiết",
+            "DETAIL_HEALTH_CHECK"
+          ),
         ]
       )
     );
     elements.push(
       Response.genELementsTemplate(
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV3V_QmFRmB8xPPSOmShms0tMMMAH1G9i7pg&s",
-        "Our restaurant opens at 8:00 AM and closes at 10:00 PM",
-        "Please select an option",
-        [Response.genPostbackButton("Order", "NEW_ORDER")]
+        "https://careplusvn.com/Uploads/t/kh/kham-suc-khoe-cho-be_0004171_710.jpeg",
+        "Khám bệnh lý thông thường",
+        "Đáp ứng yêu cầu khám chữa bệnh của trẻ em trong môi trường an toàn và thân thiện, với chất lượng chăm sóc cao",
+        [
+          Response.genPostbackButton("Đặt lịch ngay", "BOOK_HEALTH_CHECK"),
+          Response.genPostbackButton(
+            "Thông tin chi tiết",
+            "DETAIL_HEALTH_CHECK"
+          ),
+        ]
       )
     );
-    // menu
     elements.push(
       Response.genELementsTemplate(
-        "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
-        "Menu",
-        "Please select an option",
+        "https://cdn.benhvienthucuc.vn/wp-content/uploads/2021/03/tu%CC%9B-van-dinh-duong-cho-be.jpeg",
+        "Tư vấn dinh dưỡng",
+        "Bác sĩ sẽ tư vấn cách chăm sóc, dinh dưỡng cho bé phát triển toàn diện",
         [
-          Response.genPostbackButton("Breakfast", "BREAKFAST"),
-          Response.genPostbackButton("Lunch", "LUNCH"),
-          Response.genPostbackButton("Dinner", "DINNER"),
+          Response.genPostbackButton("Đặt lịch ngay", "BOOK_HEALTH_CHECK"),
+          Response.genPostbackButton(
+            "Thông tin chi tiết",
+            "DETAIL_HEALTH_CHECK"
+          ),
         ]
       )
     );
@@ -253,16 +198,28 @@ export default class ChatbotService {
     await this.callSendAPI(sender_psid, response);
   }
 
-  static async handleLunch(sender_psid) {
-    const response = Response.genGenericTemplate(
-      "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
-      "Lunch",
-      "At lunchtime, we serve lunch with rice, noodles, and bread.",
-      [
-        Response.genPostbackButton("Rice", "RICE"),
-        Response.genPostbackButton("Noodles", "NOODLES"),
-        Response.genPostbackButton("Bread", "BREAD"),
-      ]
+  static async handleAppointment(sender_psid) {
+    const client = {
+      name: "",
+      date: "",
+      phone: "",
+    };
+
+    // let response;
+    // // Get the user's name from client
+    // response = ChatbotService.genText("Tên của bé là gì?");
+    // await this.callSendAPI(sender_psid, response);
+
+    // Get the current date and time
+
+    // Get the phone number from client
+    let response = Response.genText(
+      "Cho bác sĩ biết tên của bé là gì? \nCho bác sĩ biết số điện thoại của bạn"
+    );
+    await this.callSendAPI(sender_psid, response);
+
+    response = Response.genText(
+      "Bạn đã đăt lịch hẹn thành công!. Bác sĩ sẽ liên hệ với bạn trong thời gian sớm nhất."
     );
     await this.callSendAPI(sender_psid, response);
   }
