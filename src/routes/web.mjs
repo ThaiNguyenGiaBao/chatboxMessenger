@@ -1,6 +1,7 @@
 import express from "express";
 import { configDotenv } from "dotenv";
 configDotenv();
+import { callSendAPI, handleGetStarted } from "../services/chatbotService.mjs";
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
@@ -60,41 +61,13 @@ function handlePostback(sender_psid, received_postback) {
       response = { text: "Oops, try sending another image." };
       break;
     case "GET_STARTED":
-      response = { text: "Welcome to BK page! How can I help you?" };
+      response = handleGetStarted();
       break;
     default:
       response = { text: "Oops! I don't understand that." };
   }
 
   callSendAPI(sender_psid, response);
-}
-
-// Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
-  let request_body = {
-    recipient: {
-      id: sender_psid,
-    },
-    message: response,
-  };
-  fetch(
-    "https://graph.facebook.com/v11.0/me/messages?access_token=" +
-      PAGE_ACCESS_TOKEN,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request_body),
-    }
-  )
-    .then((res) => res.json())
-    .then((res) => {
-      console.log("Message sent successfully!", res);
-    })
-    .catch((error) => {
-      console.error("Unable to send message:", error);
-    });
 }
 
 function setupProfile() {
