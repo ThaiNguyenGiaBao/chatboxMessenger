@@ -71,7 +71,7 @@ async function handlePostback(sender_psid, received_postback) {
       response = { text: "Please wait for a moment. I will connect you to an agent." };
       break;
     
-    case "MENU":
+    case "MAIN_MENU":
       response = ChatbotService.handleMenu();
       break;
     

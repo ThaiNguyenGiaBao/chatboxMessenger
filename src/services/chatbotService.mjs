@@ -71,7 +71,7 @@ export default class ChatbotService {
         "Please select an option",
         [
           Response.genPostbackButton("Start a new order", "NEW_ORDER"),
-          Response.genPostbackButton("Main menu", "MENU"),
+          Response.genPostbackButton("Main menu", "MAIN_MENU"),
           Response.genPostbackButton("How to use the chatbot?", "USE_CHATBOT"),
         ]
       )
