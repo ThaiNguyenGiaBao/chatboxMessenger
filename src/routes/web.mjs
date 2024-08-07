@@ -28,6 +28,8 @@ async function handleMessage(sender_psid, received_message) {
       case "DINNER":
         ChatbotService.handleDinner(sender_psid);
         break;
+      case "MAIN_MENU":
+        ChatbotService.handleMenu(sender_psid);
       default:
         response = { text: "Oops! I don't understand that." };
         ChatbotService.callSendAPI(sender_psid, response);
