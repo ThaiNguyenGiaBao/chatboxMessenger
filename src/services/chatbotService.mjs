@@ -30,9 +30,19 @@ function callSendAPI(sender_psid, response) {
     });
 }
 
-function handleGetStarted() {
+async function getUserName(sender_psid) {
+    let response = await fetch(
+        `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`
+    );
+    let responseJson = await response.json();
+    let userName = `${responseJson.first_name} ${responseJson.last_name}`;
+    return userName;
+}
+
+async function handleGetStarted() {
+    const username = await getUserName(sender_psid);
   let response = {
-    text: "Welcome to BK page! How can I help you?",
+    text: `Hello ${username}! I'm a chatbot. How can I help you?`,
   };
   return response;
 }
