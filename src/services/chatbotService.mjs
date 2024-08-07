@@ -56,16 +56,92 @@ export default class ChatbotService {
     };
     await this.callSendAPI(sender_psid, response1);
 
-    const respone2 = Response.genGenericTemplate(
+    const response2 = Response.genGenericTemplate(
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCB-OyweWXxSDnlPOxkeL5EZd4ezG8lk3oBgB9tQzBmYrZ4CBmLBvOYAPnNUo1FiWjglc&usqp=CAU",
       "Welcome to our restaurant",
       "Please select an option",
+      []
+    );
+
+    const elements = [];
+    elements.push(
+      Response.genELementsTemplate(
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCB-OyweWXxSDnlPOxkeL5EZd4ezG8lk3oBgB9tQzBmYrZ4CBmLBvOYAPnNUo1FiWjglc&usqp=CAU",
+        "Welcome to our restaurant",
+        "Please select an option",
+        [
+          Response.genPostbackButton("Start a new order", "NEW_ORDER"),
+          Response.genPostbackButton("Main menu", "MAIN_MENU"),
+          Response.genPostbackButton("How to use the chatbot?", "USE_CHATBOT"),
+        ]
+      )
+    );
+    elements.push(
+      Response.genELementsTemplate(
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV3V_QmFRmB8xPPSOmShms0tMMMAH1G9i7pg&s",
+        "Our restaurant opens at 8:00 AM and closes at 10:00 PM",
+        "Please select an option",
+        [Response.genPostbackButton("Order", "NEW_ORDER")]
+      )
+    );
+    // menu
+    elements.push(
+      Response.genELementsTemplate(
+        "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
+        "Menu",
+        "Please select an option",
+        [
+          Response.genPostbackButton("Breakfast", "BREAKFAST"),
+          Response.genPostbackButton("Lunch", "LUNCH"),
+          Response.genPostbackButton("Dinner", "DINNER"),
+        ]
+      )
+    );
+
+    response2.attachment.payload.elements = elements;
+
+    await this.callSendAPI(sender_psid, response2);
+  }
+
+  static async handleBreakfast(sender_psid) {
+    const response = Response.genGenericTemplate(
+      "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
+      "Breakfast",
+      "In the morning, we serve breakfast with bread, noodles, and rice.",
       [
-        Response.genPostbackButton("Start a new order", "NEW_ORDER"),
-        Response.genPostbackButton("Main menu", "MAIN_MENU"),
-        Response.genPostbackButton("How to use the chatbot?", "USE_CHATBOT"),
+        Response.genPostbackButton("Bread", "BREAD"),
+        Response.genPostbackButton("Noodles", "NOODLES"),
+        Response.genPostbackButton("Rice", "RICE"),
       ]
     );
-    await this.callSendAPI(sender_psid, respone2);
+    await this.callSendAPI(sender_psid, response);
+  }
+
+  static async handleLunch(sender_psid) {
+    const response = Response.genGenericTemplate(
+      "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
+      "Lunch",
+      "At lunchtime, we serve lunch with rice, noodles, and bread.",
+      [
+        Response.genPostbackButton("Rice", "RICE"),
+        Response.genPostbackButton("Noodles", "NOODLES"),
+        Response.genPostbackButton("Bread", "BREAD"),
+      ]
+    );
+    await this.callSendAPI(sender_psid, response);
+  }
+
+  static async handleDinner(sender_psid) {
+    const response = Response.genGenericTemplate(
+      "https://www.hoteljob.vn/uploads/images/18-09-18-15/menu-la-gi2.jpg",
+      "Dinner",
+      "In the evening, we serve dinner with noodles, bread, and rice.",
+      [
+        Response.genPostbackButton("Noodles", "NOODLES"),
+        Response.genPostbackButton("Bread", "BREAD"),
+        Response.genPostbackButton("Rice", "RICE"),
+      ]
+    );
+    await this.callSendAPI(sender_psid, response);
   }
 }

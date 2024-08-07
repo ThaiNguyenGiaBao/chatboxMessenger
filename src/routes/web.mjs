@@ -62,11 +62,20 @@ async function handlePostback(sender_psid, received_postback) {
       response = { text: "Oops, try sending another image." };
       ChatbotService.callSendAPI(sender_psid, response);
       break;
-    
+
     case "RESTART_CONVERSATION":
     case "GET_STARTED":
       await ChatbotService.handleGetStarted(sender_psid);
+      break;
 
+    case "BREAKFAST":
+      await ChatbotService.handleBreakfast(sender_psid);
+      break;
+    case "LUNCH":
+      await ChatbotService.handleLunch(sender_psid);
+      break;
+    case "DINNER":
+      await ChatbotService.handleDinner(sender_psid);
       break;
     default:
       response = { text: "Oops! I don't understand that." };

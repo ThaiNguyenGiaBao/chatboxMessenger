@@ -27,7 +27,17 @@ export default class Response {
 
     return response;
   }
+  static genELementsTemplate(image_url, title, subtitle, buttons) {
+    const response = {
+      title: title,
+      subtitle: subtitle,
+      image_url: image_url,
+      buttons: buttons,
+    };
+    return response;
+  }
 
+ 
   static genGenericTemplate(image_url, title, subtitle, buttons) {
     let response = {
       attachment: {
