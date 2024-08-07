@@ -108,13 +108,11 @@ export default class ChatbotService {
 
   static async handleGetStarted(sender_psid) {
     const username = await this.getUserName(sender_psid);
-    //console.log("Username:", username);
 
     // Send the response message
     const response1 = {
       text: `Hello ${username}! I'm a chatbot. How can I help you?`,
     };
-    await this.callSendAPI(sender_psid, response1);
 
     const response2 = Response.genGenericTemplate(
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCB-OyweWXxSDnlPOxkeL5EZd4ezG8lk3oBgB9tQzBmYrZ4CBmLBvOYAPnNUo1FiWjglc&usqp=CAU",
@@ -160,7 +158,25 @@ export default class ChatbotService {
 
     response2.attachment.payload.elements = elements;
 
+    // Quick replies
+    const response3 = Response.genQuickReply("What do you want to do next?", [
+      {
+        title: "Start a new order",
+        payload: "NEW_ORDER",
+      },
+      {
+        title: "Main menu",
+        payload: "MAIN_MENU",
+      },
+      {
+        title: "Use the chatbot",
+        payload: "USE_CHATBOT",
+      },
+    ]);
+
+    await this.callSendAPI(sender_psid, response1);
     await this.callSendAPI(sender_psid, response2);
+    await this.callSendAPI(sender_psid, response3);
   }
 
   static async handleMenu(sender_psid) {
