@@ -51,14 +51,21 @@ function handleMessage(sender_psid, received_message) {
 function handlePostback(sender_psid, received_postback) {
   let response;
   let payload = received_postback.payload;
-  if (payload === "yes") {
-    response = { text: "Thanks!" };
-  } else if (payload === "no") {
-    response = { text: "Oops, try sending another image." };
+
+  switch (payload) {
+    case "yes":
+      response = { text: "Thanks!" };
+      break;
+    case "no":
+      response = { text: "Oops, try sending another image." };
+      break;
+    case "GET_STARTED":
+      response = { text: "Welcome to BK page! How can I help you?" };
+      break;
+    default:
+      response = { text: "Oops! I don't understand that." };
   }
-  else if (payload === "GET_STARTED") {
-    response = { text: "Welcome to BK page! How can I help you?" };
-  }
+
   callSendAPI(sender_psid, response);
 }
 
