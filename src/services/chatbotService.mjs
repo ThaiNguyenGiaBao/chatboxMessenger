@@ -12,6 +12,10 @@ export default class ChatbotService {
       },
       message: response,
     };
+
+    await this.sendMarkSeen(sender_psid);
+    await this.sendTypingOn(sender_psid);
+
     fetch(
       "https://graph.facebook.com/v11.0/me/messages?access_token=" +
         PAGE_ACCESS_TOKEN,
@@ -29,6 +33,60 @@ export default class ChatbotService {
       })
       .catch((error) => {
         console.error("Unable to send message:", error);
+      });
+  }
+
+  static async sendTypingOn(sender_psid) {
+    let request_body = {
+      recipient: {
+        id: sender_psid,
+      },
+      sender_action: "typing_on",
+    };
+    fetch(
+      "https://graph.facebook.com/v11.0/me/messages?access_token=" +
+        PAGE_ACCESS_TOKEN,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request_body),
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("Typing on sent successfully!", res);
+      })
+      .catch((error) => {
+        console.error("Unable to send typing on:", error);
+      });
+  }
+
+  static async sendMarkSeen(sender_psid) {
+    let request_body = {
+      recipient: {
+        id: sender_psid,
+      },
+      sender_action: "mark_seen",
+    };
+    fetch(
+      "https://graph.facebook.com/v11.0/me/messages?access_token=" +
+        PAGE_ACCESS_TOKEN,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request_body),
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("Mark seen sent successfully!", res);
+      })
+      .catch((error) => {
+        console.error("Unable to send mark seen:", error);
       });
   }
 
