@@ -57,12 +57,13 @@ export default class ChatbotService {
     await this.callSendAPI(sender_psid, response1);
 
     const respone2 = Response.genGenericTemplate(
-      "https://www.facebook.com/images/fb_icon_325x325.png",
-      "What do you want to do?",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCB-OyweWXxSDnlPOxkeL5EZd4ezG8lk3oBgB9tQzBmYrZ4CBmLBvOYAPnNUo1FiWjglc&usqp=CAU",
+      "Welcome to our restaurant",
       "Please select an option",
       [
         Response.genPostbackButton("Start a new order", "NEW_ORDER"),
-        Response.genPostbackButton("Track an order", "TRACK_ORDER"),
+        Response.genPostbackButton("Main menu", "MAIN_MENU"),
+        Response.genPostbackButton("How to use the chatbot?", "USE_CHATBOT"),
       ]
     );
     await this.callSendAPI(sender_psid, respone2);
