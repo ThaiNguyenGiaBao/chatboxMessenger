@@ -1,8 +1,8 @@
 ###
 GET https://9440-14-225-192-183.ngrok-free.app/webhook?hub.mode=subscribe&hub.verify_token=giabao2709&hub.challenge=BaoTram
 
-###
-POST https://9440-14-225-192-183.ngrok-free.app/webhook
+### Get started
+POST http://localhost:8100/webhook
 Content-Type: application/json
 
 {
@@ -13,21 +13,15 @@ Content-Type: application/json
       "time": 1458692752478,
       "messaging": [
         {
-          "sender": {
-            "id": "123456789"
-          },
-          "recipient": {
-            "id": "987654321"
-          },
-          "timestamp": 1458692752478,
-          "message": {
-            "mid": "mid.1457764197618:41d102a3e1ae206a38",
-            "text": "hello, world!",
-            "quick_reply": {
-              "payload": "DEVELOPER_DEFINED_PAYLOAD"
-            }
-          }
-        }
+  "sender": { "id": 8268419943208957 },
+  "recipient": { "id": 104122992539521 },
+  "timestamp": 1723017321681,
+  "postback": {
+    "title": "Get Started",
+    "payload": "GET_STARTED",
+    "mid": "m_DHgDJam8A0LsQYu6o_sIuHlAHXciPnv1sHCjwzgprx3vmSnuMEU01Imfu-4VicFKJw2OP3n5L42PiOSlT4b2ww"
+  }
+}
       ]
     }
   ]

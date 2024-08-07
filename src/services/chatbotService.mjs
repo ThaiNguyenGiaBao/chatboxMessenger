@@ -40,11 +40,13 @@ async function getUserName(sender_psid) {
     });
 
   let userName = `${response.first_name} ${response.last_name}`;
+  console.log("User name:", userName);
   return userName;
 }
 
 async function handleGetStarted(sender_psid) {
   const username = await getUserName(sender_psid);
+  console.log("Username:", username);
   let response = {
     text: `Hello ${username}! I'm a chatbot. How can I help you?`,
   };

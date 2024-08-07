@@ -49,7 +49,7 @@ function handleMessage(sender_psid, received_message) {
 }
 
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
+async function handlePostback(sender_psid, received_postback) {
   let response;
   let payload = received_postback.payload;
 
@@ -61,7 +61,7 @@ function handlePostback(sender_psid, received_postback) {
       response = { text: "Oops, try sending another image." };
       break;
     case "GET_STARTED":
-      response = handleGetStarted(sender_psid);
+      response = await handleGetStarted(sender_psid);
       break;
     default:
       response = { text: "Oops! I don't understand that." };
