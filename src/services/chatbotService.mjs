@@ -223,7 +223,7 @@ export default class ChatbotService {
     );
     await this.callSendAPI(sender_psid, response);
 
-    response = Response.apply.genText(
+    response = Response.genText(
       "Nếu bạn cần hỗ trợ gì khác, hãy nhấn vào nút bên dưới."
     );
     await this.callSendAPI(sender_psid, response);
