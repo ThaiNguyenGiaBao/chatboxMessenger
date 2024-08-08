@@ -16,26 +16,24 @@ export default class ChatbotService {
     await this.sendMarkSeen(sender_psid);
     await this.sendTypingOn(sender_psid);
 
-    await setTimeout(() => {
-      fetch(
-        "https://graph.facebook.com/v11.0/me/messages?access_token=" +
-          PAGE_ACCESS_TOKEN,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(request_body),
-        }
-      )
-        .then((res) => res.json())
-        .then((res) => {
-          console.log("Message sent successfully!", res);
-        })
-        .catch((error) => {
-          console.error("Unable to send message:", error);
-        });
-    }, 5000);
+    fetch(
+      "https://graph.facebook.com/v11.0/me/messages?access_token=" +
+        PAGE_ACCESS_TOKEN,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request_body),
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("Message sent successfully!", res);
+      })
+      .catch((error) => {
+        console.error("Unable to send message:", error);
+      });
   }
 
   static async sendTypingOn(sender_psid) {
@@ -216,20 +214,17 @@ export default class ChatbotService {
     let response = Response.genText(
       "Cho bác sĩ biết tên của bé là gì? \nCho bác sĩ biết số điện thoại của bạn"
     );
-    await this.callSendAPI(sender_psid, response);
-
-
+    await setTimeout(() => this.callSendAPI(sender_psid, response), 2000);
 
     response = Response.genText(
       "Bạn đã đăt lịch hẹn thành công!. Bác sĩ sẽ liên hệ với bạn trong thời gian sớm nhất."
     );
-    await this.callSendAPI(sender_psid, response);
+    await setTimeout(() => this.callSendAPI(sender_psid, response), 2000);
 
     response = Response.genText(
       "Nếu bạn cần hỗ trợ gì khác, hãy nhấn vào nút bên dưới."
     );
-    await this.callSendAPI(sender_psid, response);
-
+    await setTimeout(() => this.callSendAPI(sender_psid, response), 2000);
     response = Response.genGenericTemplate(
       "https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/319815262_711019103936431_1276742203420179473_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=MGpD6Q3MIc0Q7kNvgEHz2Qm&_nc_ht=scontent-hkg4-2.xx&oh=00_AYAVAAUHcJMAtO4-n_QMyJir9LnlZ9H7lV_7m3bU_aOIAw&oe=66B961CF",
       "Hãy cho bác sĩ biết bạn đang cần gì?",
@@ -240,7 +235,7 @@ export default class ChatbotService {
         Response.genPostbackButton("Đặt lịch hẹn", "APPOINTMENT"),
       ]
     );
-    await this.callSendAPI(sender_psid, response);
+    await setTimeout(() => this.callSendAPI(sender_psid, response), 2000);
   }
 
   static async handleDinner(sender_psid) {
