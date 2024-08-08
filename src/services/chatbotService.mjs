@@ -222,6 +222,13 @@ export default class ChatbotService {
       "Bạn đã đăt lịch hẹn thành công!. Bác sĩ sẽ liên hệ với bạn trong thời gian sớm nhất."
     );
     await this.callSendAPI(sender_psid, response);
+
+    response = Response.apply.genText(
+      "Nếu bạn cần hỗ trợ gì khác, hãy nhấn vào nút bên dưới."
+    );
+    await this.callSendAPI(sender_psid, response);
+
+    this.handleGetStarted(sender_psid);
   }
 
   static async handleDinner(sender_psid) {

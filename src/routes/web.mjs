@@ -19,17 +19,11 @@ async function handleMessage(sender_psid, received_message) {
   } else if (received_message.quick_reply) {
     let payload = received_message.quick_reply.payload;
     switch (payload) {
-      case "BREAKFAST":
-        ChatbotService.handleBreakfast(sender_psid);
-        break;
-      case "LUNCH":
-        ChatbotService.handleLunch(sender_psid);
-        break;
-      case "DINNER":
-        ChatbotService.handleDinner(sender_psid);
-        break;
-      case "MAIN_MENU":
-        ChatbotService.handleMenu(sender_psid);
+      // DISEASE ACCIDENT OTHERS
+      case "DISEASE":
+      case "ACCIDENT":
+      case "OTHERS":
+        response = ChatbotService.handleAppointment(sender_psid);
         break;
       default:
         response = { text: "Oops! I don't understand that." };
@@ -75,7 +69,6 @@ async function handlePostback(sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   switch (payload) {
-
     case "RESTART_CONVERSATION":
     case "GET_STARTED":
       await ChatbotService.handleGetStarted(sender_psid);
