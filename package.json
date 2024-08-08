@@ -1,15 +1,12 @@
 {
   "dependencies": {
     "@nlpjs/basic": "^4.27.0",
-    "@tensorflow-models/qna": "^1.0.2",
-    "@tensorflow/tfjs": "^4.20.0",
     "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "node-nlp": "^4.27.0",
-    "nodemon": "^3.1.4",
-    "openai": "^4.55.1"
+    "nodemon": "^3.1.4"
   },
   "scripts": {
     "start": "nodemon server.mjs"

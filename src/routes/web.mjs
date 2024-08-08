@@ -10,7 +10,11 @@ async function loadModel() {
   await manager.load("model.nlp");
   manager.save();
 }
-loadModel();
+try {
+  loadModel();
+} catch (error) {
+  console.log("Error loading model:", error);
+}
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
@@ -24,7 +28,7 @@ async function handleMessage(sender_psid, received_message) {
     // response = {
     //   text: `You sent the message: "${received_message.text}". Now send me an image!`,
     // };
-    const botAnswer = await manager.process("vi", answer);
+    const botAnswer = await manager.process("vi", received_message.text);
     console.log("Bot Answer:", botAnswer);
     if (botAnswer.answer) {
       response = {
