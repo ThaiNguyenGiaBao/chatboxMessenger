@@ -183,9 +183,10 @@ let initWEBRoutes = (app) => {
         // entry.messaging is an array, but only ever contains one message => get index 0
         let webhook_event = entry.messaging[0];
         console.log(webhook_event);
-
         if (webhook_event.message) {
           handleMessage(webhook_event.sender.id, webhook_event.message);
+          console.log(webhook_event.message.nlpv2);
+
         } else if (webhook_event.postback) {
           handlePostback(webhook_event.sender.id, webhook_event.postback);
         }
