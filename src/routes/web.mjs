@@ -89,11 +89,11 @@ async function handlePostback(sender_psid, received_postback) {
     case "APPOINTMENT":
       await ChatbotService.handleAppointment(sender_psid);
       break;
-    
+
     case "BOOK_HEALTH_CHECK":
-    await ChatbotService.handleAppointment(sender_psid);
+      await ChatbotService.handleAppointment(sender_psid);
       break;
-      
+
     default:
       response = { text: "Xin lỗi, trợ lý không hiểu ý của bạn!" };
       ChatbotService.callSendAPI(sender_psid, response);
@@ -185,8 +185,8 @@ let initWEBRoutes = (app) => {
         console.log(webhook_event);
         if (webhook_event.message) {
           handleMessage(webhook_event.sender.id, webhook_event.message);
-          console.log(webhook_event.message.nlpv2);
-
+          console.log("Locales:", webhook_event.message.nlpv2.detected_locales);
+          console.log("Entities:", webhook_event.message.nlpv2.entities);
         } else if (webhook_event.postback) {
           handlePostback(webhook_event.sender.id, webhook_event.postback);
         }
