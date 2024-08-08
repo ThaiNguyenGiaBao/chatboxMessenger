@@ -89,11 +89,13 @@ async function handlePostback(sender_psid, received_postback) {
     case "APPOINTMENT":
       await ChatbotService.handleAppointment(sender_psid);
       break;
-    case "DINNER":
-      await ChatbotService.handleDinner(sender_psid);
+    
+    case "BOOK_HEALTH_CHECK":
+    await ChatbotService.handleAppointment(sender_psid);
       break;
+      
     default:
-      response = { text: "Oops! I don't understand that." };
+      response = { text: "Xin lỗi, trợ lý không hiểu ý của bạn!" };
       ChatbotService.callSendAPI(sender_psid, response);
   }
 }
@@ -132,17 +134,17 @@ function setupPersistentMenu() {
         call_to_actions: [
           {
             type: "postback",
-            title: "Talk to an agent",
+            title: "Liên hệ với bác sĩ",
             payload: "TALK_TO_AGENT",
           },
           {
             type: "postback",
-            title: "Restart conversation",
+            title: "Bắt đầu lại cuộc trò chuyện",
             payload: "RESTART_CONVERSATION",
           },
           {
             type: "web_url",
-            title: "Visit website",
+            title: "Website phòng khám",
             url: "https://www.facebook.com",
           },
         ],

@@ -154,7 +154,7 @@ export default class ChatbotService {
     const elements = [];
     elements.push(
       Response.genELementsTemplate(
-        "https://login.medlatec.vn//ckfinder/userfiles/images/kham-suc-khoe-cho-tre-em-o-dau-tot-1.jpg",
+        "https://cdn-01.tokyofamilyclinic.com.vn/tokyo-website/images/Temp_khamnhi/kham-suc-khoe-tre-em-2.jpg",
         "Khám sức khỏe tổng quát",
         "Bác sĩ sẽ trao đổi, đồng thời giải đáp để phụ huynh hiểu về tình trạng của bé",
         [
@@ -228,7 +228,17 @@ export default class ChatbotService {
     );
     await this.callSendAPI(sender_psid, response);
 
-    this.handleGetStarted(sender_psid);
+    response = Response.genGenericTemplate(
+      "https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/319815262_711019103936431_1276742203420179473_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=MGpD6Q3MIc0Q7kNvgEHz2Qm&_nc_ht=scontent-hkg4-2.xx&oh=00_AYAVAAUHcJMAtO4-n_QMyJir9LnlZ9H7lV_7m3bU_aOIAw&oe=66B961CF",
+      "Hãy cho bác sĩ biết bạn đang cần gì?",
+      "Nhấn các nút bên dưới để chọn",
+      [
+        Response.genPostbackButton("Cần tư vấn", "ADVISE"),
+        Response.genPostbackButton("Danh sách dịch vụ khám", "SERVICES"),
+        Response.genPostbackButton("Đặt lịch hẹn", "APPOINTMENT"),
+      ]
+    );
+    await this.callSendAPI(sender_psid, response);
   }
 
   static async handleDinner(sender_psid) {
