@@ -14,9 +14,9 @@ export default class ChatbotService {
     };
 
     await this.sendMarkSeen(sender_psid);
-    this.sendTypingOn(sender_psid);
+    await this.sendTypingOn(sender_psid);
 
-    setTimeout(() => {
+    await setTimeout(() => {
       fetch(
         "https://graph.facebook.com/v11.0/me/messages?access_token=" +
           PAGE_ACCESS_TOKEN,
@@ -217,6 +217,8 @@ export default class ChatbotService {
       "Cho bác sĩ biết tên của bé là gì? \nCho bác sĩ biết số điện thoại của bạn"
     );
     await this.callSendAPI(sender_psid, response);
+
+
 
     response = Response.genText(
       "Bạn đã đăt lịch hẹn thành công!. Bác sĩ sẽ liên hệ với bạn trong thời gian sớm nhất."
