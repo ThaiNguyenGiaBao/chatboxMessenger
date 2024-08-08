@@ -25,6 +25,7 @@ async function handleMessage(sender_psid, received_message) {
     //   text: `You sent the message: "${received_message.text}". Now send me an image!`,
     // };
     const botAnswer = await manager.process("vi", answer);
+    console.log("Bot Answer:", botAnswer);
     if (botAnswer.answer) {
       response = {
         text: botAnswer.answer,
