@@ -3,6 +3,15 @@ import { configDotenv } from "dotenv";
 configDotenv();
 import ChatbotService from "../services/chatbotService.mjs";
 
+import { NlpManager } from "node-nlp";
+const manager = new NlpManager({ languages: ["vi"] });
+async function loadModel() {
+  // Load a model from file (optional, if you have a pre-trained model saved)
+  await manager.load("model.nlp");
+  manager.save();
+}
+loadModel();
+
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
@@ -12,9 +21,19 @@ let router = express.Router();
 async function handleMessage(sender_psid, received_message) {
   let response;
   if (received_message.text && !received_message.quick_reply) {
-    response = {
-      text: `You sent the message: "${received_message.text}". Now send me an image!`,
-    };
+    // response = {
+    //   text: `You sent the message: "${received_message.text}". Now send me an image!`,
+    // };
+    const botAnswer = await manager.process("vi", answer);
+    if (botAnswer.answer) {
+      response = {
+        text: botAnswer.answer,
+      };
+    } else {
+      response = {
+        text: "Tôi không hiểu câu hỏi của bạn. Bạn có thể nói rõ hơn không?",
+      };
+    }
     ChatbotService.callSendAPI(sender_psid, response);
   } else if (received_message.quick_reply) {
     let payload = received_message.quick_reply.payload;
@@ -100,33 +119,10 @@ async function handlePostback(sender_psid, received_postback) {
   }
 }
 
-function setupProfile() {
+function setup() {
   let request_body = {
     get_started: { payload: "GET_STARTED" },
     whitelisted_domains: ["https://drum-expert-miserably.ngrok-free.app/"],
-  };
-  fetch(
-    "https://graph.facebook.com/v11.0/me/messenger_profile?access_token=" +
-      PAGE_ACCESS_TOKEN,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request_body),
-    }
-  )
-    .then((res) => res.json())
-    .then((res) => {
-      console.log("Setup profile successfully!", res);
-    })
-    .catch((error) => {
-      console.error("Unable to setup profile:", error);
-    });
-}
-
-function setupPersistentMenu() {
-  let request_body = {
     persistent_menu: [
       {
         locale: "default",
@@ -151,10 +147,32 @@ function setupPersistentMenu() {
       },
     ],
   };
-
   fetch(
     "https://graph.facebook.com/v11.0/me/messenger_profile?access_token=" +
       PAGE_ACCESS_TOKEN,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request_body),
+    }
+  )
+    .then((res) => res.json())
+    .then((res) => {
+      console.log("Setup successfully!", res);
+    })
+    .catch((error) => {
+      console.error("Unable to setup profile:", error);
+    });
+
+  // Initiate NLP
+
+  fetch(
+    "https://graph.facebook.com/v11.0/me/nlp_configs?access_token=" +
+      PAGE_ACCESS_TOKEN +
+      "&nlp_enabled=true" +
+      "n_best_values=4",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -163,10 +181,10 @@ function setupPersistentMenu() {
   )
     .then((res) => res.json())
     .then((res) => {
-      console.log("Setup persistent menu successfully!", res);
+      console.log("NLP initiated successfully!", res);
     })
     .catch((error) => {
-      console.error("Unable to setup persistent menu:", error);
+      console.error("Unable to initiate NLP:", error);
     });
 }
 
@@ -214,14 +232,17 @@ let initWEBRoutes = (app) => {
     }
   });
 
-  router.post("/setup-profile", (req, res) => {
-    setupProfile();
-    return res.send("Setup profile successfully!");
+  router.post("/setup", (req, res) => {
+    setup();
+    return res.send("Setup successfully!");
   });
 
-  router.post("/setup-persistent-menu", (req, res) => {
-    setupPersistentMenu();
-    return res.send("Setup persistent menu successfully!");
+  router.post("/setup-nlp", (req, res) => {
+    let request_body = {
+      nlp_configs: {
+        nlp_enabled: true,
+      },
+    };
   });
 
   return app.use("/", router);
