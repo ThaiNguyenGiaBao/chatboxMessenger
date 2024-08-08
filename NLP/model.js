@@ -358,6 +358,95 @@ manager.addDocument(
   "Làm sao để xử lý khi con tôi bị tiêu chảy?",
   "DISEASE"
 );
+manager.addDocument("vi", "Con tôi bị nôn mửa, tôi nên làm gì?", "DISEASE");
+manager.addDocument(
+  "vi",
+  "Con tôi bị tiêu chảy kéo dài, có nguy hiểm không?",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Triệu chứng nào cho thấy con tôi bị cúm?",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Tôi có thể nhận biết bệnh viêm phổi ở trẻ không?",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Con tôi có triệu chứng ho khan, tôi nên làm gì?",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Khi nào tôi nên đưa con đến bác sĩ khi con bị bệnh?",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Có cách nào để chữa bệnh cảm cúm cho trẻ không?",
+  "DISEASE"
+);
+manager.addDocument("vi", "Con tôi bị phát ban, tôi nên làm gì?", "DISEASE");
+manager.addDocument(
+  "vi",
+  "Tôi lo lắng về triệu chứng dị ứng của con tôi",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Làm thế nào để điều trị cho trẻ em bị bệnh tay chân miệng?",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Con tôi bị sốt cao và đau bụng, có nguy hiểm không?",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Con tôi có triệu chứng ngạt mũi, tôi nên làm gì?",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Làm sao để biết con tôi có bị viêm amidan không?",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Con tôi bị đau họng, tôi nên xử lý thế nào?",
+  "DISEASE"
+);
+manager.addDocument("vi", "Có cách nào để giảm sốt cho trẻ không?", "DISEASE");
+manager.addDocument(
+  "vi",
+  "Con tôi có triệu chứng viêm tai giữa, tôi nên làm gì?",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Làm sao để chăm sóc trẻ bị bệnh lâu ngày?",
+  "DISEASE"
+);
+manager.addDocument("vi", "Tôi nên làm gì khi con tôi bị co giật?", "DISEASE");
+manager.addDocument(
+  "vi",
+  "Có phải con tôi bị bệnh khi có triệu chứng mệt mỏi kéo dài không?",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Tôi có thể cho con uống thuốc gì khi bị cảm lạnh?",
+  "DISEASE"
+);
+manager.addDocument(
+  "vi",
+  "Làm sao để nhận biết bệnh lý về đường hô hấp ở trẻ em?",
+  "DISEASE"
+);
 
 manager.addAnswer(
   "vi",
@@ -374,8 +463,115 @@ manager.addAnswer(
   "DISEASE",
   "Hãy giữ ấm cho con và cho con uống nhiều nước. Nếu tình trạng không cải thiện, hãy gặp bác sĩ."
 );
+manager.addAnswer(
+  "vi",
+  "DISEASE",
+  "Bạn nên theo dõi triệu chứng và đưa con đi khám nếu cần thiết."
+);
+manager.addAnswer(
+  "vi",
+  "DISEASE",
+  "Trong trường hợp nôn mửa kéo dài, hãy đưa con đến bác sĩ để được kiểm tra."
+);
+manager.addAnswer(
+  "vi",
+  "DISEASE",
+  "Hãy giữ cho con đủ nước và nghỉ ngơi nếu có triệu chứng cảm cúm."
+);
 
 // ACCIDENT
+manager.addDocument(
+  "vi",
+  "Con tôi bị ngã khi chơi, tôi nên làm gì?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Làm thế nào để xử lý khi con tôi bị chấn thương?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Con tôi bị đập đầu vào bàn, tôi nên kiểm tra gì?",
+  "ACCIDENT"
+);
+manager.addDocument("vi", "Tôi cần làm gì khi con tôi bị rách da?", "ACCIDENT");
+manager.addDocument(
+  "vi",
+  "Có cách nào để xử lý vết thương hở không?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Con tôi bị bỏng do nước sôi, tôi nên làm gì?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Con tôi bị côn trùng cắn, tôi nên xử lý như thế nào?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Tôi có nên đưa con đến bệnh viện khi bị ngã không?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Làm sao để biết con tôi có bị gãy xương không?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Con tôi bị thương do tai nạn giao thông, tôi cần làm gì ngay lập tức?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Tôi nên làm gì khi con tôi bị đau bụng sau khi ngã?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Con tôi bị chấn thương vùng đầu, tôi nên quan sát điều gì?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Có cách nào để sơ cứu vết thương cho trẻ không?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Làm thế nào để xử lý khi con tôi bị điện giật?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Con tôi bị ngã từ cầu thang, tôi nên làm gì?",
+  "ACCIDENT"
+);
+manager.addDocument("vi", "Tôi cần làm gì khi con tôi bị say xe?", "ACCIDENT");
+manager.addDocument(
+  "vi",
+  "Có triệu chứng nào cho thấy con tôi bị chấn thương nghiêm trọng không?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Tôi có nên cho con uống thuốc giảm đau sau khi bị ngã không?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Con tôi bị thương do chơi đùa với đồ vật sắc nhọn, tôi nên làm gì?",
+  "ACCIDENT"
+);
+manager.addDocument(
+  "vi",
+  "Làm sao để xử lý khi con tôi bị ngạt thở?",
+  "ACCIDENT"
+);
 manager.addDocument("vi", "Con tôi bị ngã, tôi nên làm gì?", "ACCIDENT");
 manager.addDocument(
   "vi",
@@ -402,7 +598,7 @@ manager.addDocument("vi", "Tôi cần làm gì khi con tôi bị tai nạn?", "A
 manager.addAnswer(
   "vi",
   "ACCIDENT",
-  "Hãy rửa vết thương bằng nước sạch và đưa con đi khám nếu vết thương nghiêm trọng."
+  "Hãy rửa vết thương bằng nước sạch và đưa con đi khám nếu vết thương nghiêm trọng và liên hệ với bác sĩ."
 );
 manager.addAnswer(
   "vi",
