@@ -4,6 +4,10 @@ configDotenv();
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
+function lightSleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export default class ChatbotService {
   static async callSendAPI(sender_psid, response) {
     let request_body = {
@@ -34,6 +38,7 @@ export default class ChatbotService {
       .catch((error) => {
         console.error("Unable to send message:", error);
       });
+      await lightSleep(2000);
   }
 
   static async sendTypingOn(sender_psid) {
@@ -214,17 +219,17 @@ export default class ChatbotService {
     let response = Response.genText(
       "Cho bác sĩ biết tên của bé là gì? \nCho bác sĩ biết số điện thoại của bạn"
     );
-    setTimeout(() => this.callSendAPI(sender_psid, response), 2000);
+    await this.callSendAPI(sender_psid, response);
 
     response = Response.genText(
       "Bạn đã đăt lịch hẹn thành công!. Bác sĩ sẽ liên hệ với bạn trong thời gian sớm nhất."
     );
-    setTimeout(() => this.callSendAPI(sender_psid, response), 2000);
+    await this.callSendAPI(sender_psid, response);
 
     response = Response.genText(
       "Nếu bạn cần hỗ trợ gì khác, hãy nhấn vào nút bên dưới."
     );
-    setTimeout(() => this.callSendAPI(sender_psid, response), 2000);
+    await this.callSendAPI(sender_psid, response);
 
     response = Response.genGenericTemplate(
       "https://scontent-hkg4-2.xx.fbcdn.net/v/t39.30808-6/319815262_711019103936431_1276742203420179473_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=MGpD6Q3MIc0Q7kNvgEHz2Qm&_nc_ht=scontent-hkg4-2.xx&oh=00_AYAVAAUHcJMAtO4-n_QMyJir9LnlZ9H7lV_7m3bU_aOIAw&oe=66B961CF",
@@ -236,7 +241,7 @@ export default class ChatbotService {
         Response.genPostbackButton("Đặt lịch hẹn", "APPOINTMENT"),
       ]
     );
-    setTimeout(() => this.callSendAPI(sender_psid, response), 2000);
+    await this.callSendAPI(sender_psid, response);
   }
 
   static async handleDinner(sender_psid) {
