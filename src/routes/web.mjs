@@ -47,8 +47,10 @@ async function handleMessage(sender_psid, received_message) {
       case "DISEASE":
       case "ACCIDENT":
       case "OTHERS":
-        response = ChatbotService.handleAppointment(sender_psid);
+        ChatbotService.handleAppointment(sender_psid);
         break;
+      case "TALK_TO_AGENT":
+        ChatbotService.handleTalkToAgent(sender_psid);
       default:
         response = { text: "Oops! I don't understand that." };
         ChatbotService.callSendAPI(sender_psid, response);

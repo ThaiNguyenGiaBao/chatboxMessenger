@@ -5,7 +5,7 @@ configDotenv();
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 function lightSleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export default class ChatbotService {
@@ -38,7 +38,7 @@ export default class ChatbotService {
       .catch((error) => {
         console.error("Unable to send message:", error);
       });
-      await lightSleep(2000);
+    await lightSleep(2000);
   }
 
   static async sendTypingOn(sender_psid) {
@@ -148,6 +148,13 @@ export default class ChatbotService {
       },
     ]);
 
+    await this.callSendAPI(sender_psid, response);
+  }
+
+  static async handleTalkToAgent(sender_psid) {
+    const response = {
+      text: "Đây là số điện thoại của bác sĩ: 0123456789, bạn hãy gọi điện cho bác sĩ nhé!",
+    };
     await this.callSendAPI(sender_psid, response);
   }
 
